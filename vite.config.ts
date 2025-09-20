@@ -9,13 +9,16 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Smart Study & Flashcard Generator',
-        short_name: 'Flashcards',
-        description: 'Generate, study, and manage flashcards offline!',
-        theme_color: '#1e293b',
-        background_color: '#0f172a',
+        name: 'Smart Study - AI-Powered Flashcard Generator',
+        short_name: 'Smart Study',
+        description: 'Transform your learning with AI-powered flashcard generation and intelligent study sessions.',
+        theme_color: '#3b82f6',
+        background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
+        scope: '/',
+        orientation: 'portrait-primary',
+        categories: ['education', 'productivity', 'utilities'],
         icons: [
           {
             src: '/icon-192.png',
@@ -36,8 +39,48 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+        globPatterns: ['**/*.{js,css,html,png,svg,ico,woff2}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              }
+            }
+          }
+        ]
       },
     }),
   ],
+  build: {
+    target: 'es2015',
+    minify: 'terser',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          icons: ['@heroicons/react']
+        }
+      }
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
+  server: {
+    port: 3000,
+    host: true,
+  },
+  preview: {
+    port: 3000,
+    host: true,
+  },
 });

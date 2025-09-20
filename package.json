@@ -1,14 +1,33 @@
 {
-  "name": "flashcard-generator",
+  "name": "smart-study-flashcard-generator",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "src/main.jsx",
+  "description": "AI-Powered Flashcard Generator with modern UI and offline support",
+  "keywords": ["flashcards", "study", "learning", "ai", "education", "pwa", "react"],
+  "author": "Vivek Chaurasia",
+  "license": "MIT",
+  "homepage": "https://github.com/Vivekch05/flashcard-generator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vivekch05/flashcard-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vivekch05/flashcard-generator/issues"
+  },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build:analyze": "vite build --mode analyze",
+    "preview": "vite preview --host",
+    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules/.vite",
+    "prebuild": "npm run clean && npm run lint && npm run type-check",
+    "postbuild": "echo 'Build completed successfully!'",
+    "start": "npm run preview"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
