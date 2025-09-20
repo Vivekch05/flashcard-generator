@@ -18,14 +18,14 @@ class ErrorBoundary extends React.Component {
     });
     
     // Log error to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.error('ErrorBoundary caught an error:', error, errorInfo);
     }
   }
 
-  handleReload = () => {
+  handleReload() {
     window.location.reload();
-  };
+  }
 
   render() {
     if (this.state.hasError) {
@@ -47,7 +47,7 @@ class ErrorBoundary extends React.Component {
               
               <div className="space-y-3">
                 <button
-                  onClick={this.handleReload}
+                  onClick={() => this.handleReload()}
                   className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2"
                 >
                   <ArrowPathIcon className="h-5 w-5" />
@@ -62,7 +62,7 @@ class ErrorBoundary extends React.Component {
                 </button>
               </div>
               
-              {process.env.NODE_ENV === 'development' && this.state.error && (
+              {import.meta.env.DEV && this.state.error && (
                 <details className="mt-6 text-left">
                   <summary className="cursor-pointer text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
                     Error Details (Development)
